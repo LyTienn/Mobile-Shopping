@@ -1,0 +1,60 @@
+@import './theme.css';
+
+/* ===== Headings ===== */
+.h1 {
+  font-family: var(--font-heading);
+  font-size: var(--h1-size);
+  line-height: 100%;
+}
+
+.h2 {
+  font-family: var(--font-heading); 
+  font-size: var(--h2-size);
+}
+
+.h3 {
+  font-family: var(--font-heading);
+  font-size: var(--h3-size);
+}
+
+/* ===== Paragraphs ===== */
+/* p1 */
+.p1-r {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--p1-size);
+}
+.p1-b {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--p1-size);
+}
+
+/* p2 */
+.p2-r {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--p2-size);
+  color: var(--color-p-1);
+}
+
+/* p3 */
+.p3-r {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--p3-size);
+  color: var(--color-p-23);
+}
+
+/* p4 */
+.p4-r {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--p4-size);
+}
+
+.p4-b {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--p4-size);
+}
