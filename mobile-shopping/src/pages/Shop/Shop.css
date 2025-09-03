@@ -1,0 +1,118 @@
+.shop-page{
+    top: 90px;
+    margin-left: 180px;
+    transition: margin-left 0.2s;
+    position: relative;
+}
+
+.shop-page.collapsed .shop-header,
+.shop-header.collapsed {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+.shop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    top: 90px;
+    position: fixed;
+    left: 0;
+    margin-left: 180px;
+    width: calc(100% - 180px);
+    transition: margin-left 0.2s, width 0.2s;
+    z-index: 10;
+    border-bottom: 1px solid var(--color-dark-1);
+    background-color: var(--color-p-23);
+}
+
+.shop-title {
+    font-weight: 700;
+    padding: 4px 8px;
+}
+
+.shop-breadcrumbs a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 2px 8px; 
+    border-radius: 8px; 
+    transition: background 0.2s;
+}
+
+.shop-breadcrumbs a:hover {
+    background: transparent;
+    text-decoration: underline;
+}
+
+.shop-tool {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.filter-icon {
+    width: 32px;
+    height: 32px;
+    max-width: 100%;
+    cursor: pointer;
+    margin-right: 18px;
+}
+
+.shop-product {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-top: 110px;
+}
+
+.shop-product-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.shop-product-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+}
+
+.shop-product-item img {
+    width: 100px;
+    height: 120px;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.shop-product-interact {
+    display: flex;
+    flex-direction: column;
+}
+
+.no-products {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.filter-dropdown {
+    animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+.shop-page {
+    margin-left: 180px;
+    transition: margin-left 0.2s;
+    position: relative;
+}
+
+.shop-page.collapsed {
+    margin-left: 70px; 
+}

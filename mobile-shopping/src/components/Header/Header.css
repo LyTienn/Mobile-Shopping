@@ -1,0 +1,36 @@
+.header-container {
+    width: 100vw;
+    background: var(--color-header);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 28px;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 10;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo {
+    width: 88px;
+    height: 76px;
+    cursor: pointer;
+}
+
+.header-avatar {
+    width: 69px;
+    height: 69px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}

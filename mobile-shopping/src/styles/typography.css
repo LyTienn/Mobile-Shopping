@@ -35,7 +35,13 @@
   font-family: var(--font-body);
   font-weight: 400;
   font-size: var(--p2-size);
-  color: var(--color-p-1);
+}
+
+.p2-b {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--p2-size);
+
 }
 
 /* p3 */

@@ -6,13 +6,13 @@
     height: 100vh;
     min-height: 100vh;
     min-width: 100vw;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: content-box;
 }
 
 body, html {
@@ -20,7 +20,7 @@ body, html {
   height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 a {

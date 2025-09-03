@@ -32,7 +32,7 @@ form {
 input[type="text"],
 input[type="password"] {
     width: 100%;
-    padding: 14px 16px;
+    padding: 14px 0 14px 4px;
     border-radius: 8px;
     border: none;
     font-size: var(--p2-size);
