@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import Shop from '../../assets/images/shop.svg';
-import Cart from '../../assets/images/cart.svg';
+import Cart from '../../assets/images/cart.png';
 import Profile from '../../assets/images/profile.svg';
 import './LeftBar.css';
 
@@ -31,7 +31,7 @@ const LeftBar = ({ collapsed, setCollapsed }) => {
                         key={item.key}
                         to={item.path}
                         className={`leftbar-item${location.pathname === item.path ||
-                        (item.key === 'shop' && location.pathname === '/') ? ' active' : ''}`}
+                        (item.key === 'shop' && (location.pathname === '/' || location.pathname.startsWith('/shop'))) ? ' active' : ''}`}
                     >
                         <span className="leftbar-icon">
                             <img src={item.icon} alt={`${item.label} icon`} />

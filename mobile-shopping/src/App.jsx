@@ -9,12 +9,24 @@ import './App.css';
 const Shop = lazy(() => import('./pages/Shop/Shop'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
 const Profile = lazy(() => import('./pages/Profile/Profile'));
-// const Product = lazy(() => import('./pages/Product/Product'));
-
 
 //main layout
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const addToCart = (product) => {
+    setCartItems(prev => {
+      const existingProduct = prev.find(item => item.id === product.id);
+      if(existingProduct) {
+        return prev.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1}
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1}];
+    });
+  };
 
   return (
     <div className='main-layout'>
@@ -26,19 +38,19 @@ const MainLayout = () => {
         <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
           <Routes>
             {/* Route cho Shop với nested routing */}
-            <Route path="/shop/*" element={<Shop collapsed={collapsed} />} />
+            <Route path="/shop/*" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
 
             {/* Route cho Cart */}
-            <Route path="/cart" element={<Cart collapsed={collapsed} />} />
+            <Route path="/cart" element={<Cart cartItems={cartItems} collapsed={collapsed} />} />
 
             {/* Route cho Profile */}
             <Route path="/profile" element={<Profile collapsed={collapsed} />} />
             
             {/* Default route - Shop */}
-            <Route path="/" element={<Shop collapsed={collapsed} />} />
+            <Route path="/" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
 
             {/* Catch-all route */}
-            <Route path="*" element={<Shop collapsed={collapsed} />} />
+            <Route path="*" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
           </Routes>
         </Suspense>
       </div>

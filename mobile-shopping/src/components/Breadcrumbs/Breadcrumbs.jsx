@@ -1,5 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 import { Breadcrumb } from "antd";
+import "./Breadcrumbs.css";
 
 const breadcrumbMap = {
     shop: { label: "Shop", to: "/shop" },
@@ -10,9 +11,12 @@ const breadcrumbMap = {
 
 const Breadcrumbs = () => {
     const location = useLocation();
-    const pathnameArr = location.pathname.split('/').filter(x => x);
+    let pathnameArr = location.pathname.split('/').filter(x => x);
 
     let itemsArr = pathnameArr;
+    if(location.pathname === '/' || pathnameArr.length === 0) {
+        itemsArr = ["shop"];
+    }
     if(
         pathnameArr.length === 3 &&
         pathnameArr[0] === 'shop' &&
@@ -47,7 +51,7 @@ const Breadcrumbs = () => {
 
     return (
         <nav className="breadcrumbs" style={{ padding: '8px 0', marginLeft: '8px' }}>
-            <Breadcrumb>
+            <Breadcrumb separator={<span style={{ fontSize: '26px' }}>/</span>}>
                 {items}
             </Breadcrumb>
         </nav>

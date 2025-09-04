@@ -63,9 +63,7 @@ const ShopProductList = ({ handleViewProduct, collapsed }) => {
             <div className='shop-header'>
                 <div>
                     <div className='shop-title h2'>Shop</div>
-                    <div className='shop-breadcrumbs'>
-                        <Breadcrumb />
-                    </div>
+                    <Breadcrumb />
                 </div>
                 <div className='shop-tool'>
                     <Search value={search} onChange={(e) => setSearch(e.target.value)}/>
@@ -123,7 +121,7 @@ const ShopProductList = ({ handleViewProduct, collapsed }) => {
     );
 };
 
-const Shop = ({ collapsed }) => {
+const Shop = ({ collapsed, addToCart }) => {
     const navigate = useNavigate();
 
     const handleViewProduct = (productId) => {
@@ -132,7 +130,6 @@ const Shop = ({ collapsed }) => {
 
     return (
         <Routes>
-            {/* Route mặc định - hiển thị danh sách sản phẩm */}
             <Route 
                 index 
                 element={
@@ -140,12 +137,11 @@ const Shop = ({ collapsed }) => {
                 } 
             />
             
-            {/* Route cho product detail với lazy loading */}
             <Route
                 path="product/:productId"
                 element={
                     <Suspense fallback={<div className="loading-spinner">Loading Product...</div>}>
-                        <Product productItems={productItems} />
+                        <Product productItems={productItems} collapsed={collapsed} addToCart={addToCart} />
                     </Suspense>
                 }
             />

@@ -1,0 +1,47 @@
+.breadcrumbs .ant-breadcrumb-link,
+.breadcrumbs .ant-breadcrumb-link:active,
+.breadcrumbs .ant-breadcrumb-link:focus,
+.breadcrumbs .ant-breadcrumb-link:hover {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    transition: text-decoration 0.2s;
+}
+
+.breadcrumbs .ant-breadcrumb-link a,
+.breadcrumbs .ant-breadcrumb-link a:active,
+.breadcrumbs .ant-breadcrumb-link a:focus,
+.breadcrumbs .ant-breadcrumb-link a:hover {
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    text-decoration: none;
+}
+
+.breadcrumbs .ant-breadcrumb-item,
+.breadcrumbs .ant-breadcrumb-item:hover {
+    background: none !important;
+    background-color: transparent !important;
+}
+
+.breadcrumbs .ant-breadcrumb-item span,
+.breadcrumbs .ant-breadcrumb-item span:hover {
+    background: none !important;
+    background-color: transparent !important;
+}
+
+.breadcrumbs .ant-breadcrumb,
+.breadcrumbs .ant-breadcrumb * {
+    background: none !important;
+    background-color: transparent !important;
+}
+
+.breadcrumbs {
+    background: none !important;
+}
+
+.breadcrumbs * {
+    background: none !important;
+    background-color: transparent !important;
+}

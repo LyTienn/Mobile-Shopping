@@ -5,6 +5,10 @@
     position: relative;
 }
 
+.shop-page.collapsed {
+    margin-left: 70px; 
+}
+
 .shop-page.collapsed .shop-header,
 .shop-header.collapsed {
     margin-left: 70px;
@@ -15,7 +19,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    top: 90px;
+    margin-top: 2px;
     position: fixed;
     left: 0;
     margin-left: 180px;
@@ -23,15 +27,16 @@
     transition: margin-left 0.2s, width 0.2s;
     z-index: 10;
     border-bottom: 1px solid var(--color-dark-1);
-    background-color: var(--color-p-23);
+    background-color: var(--color-p-23);;
 }
 
 .shop-title {
     font-weight: 700;
     padding: 4px 8px;
+    margin-top: 8px;
 }
 
-.shop-breadcrumbs a {
+/* .shop-breadcrumbs a {
     text-decoration: none;
     display: inline-block;
     padding: 2px 8px; 
@@ -42,7 +47,7 @@
 .shop-breadcrumbs a:hover {
     background: transparent;
     text-decoration: underline;
-}
+} */
 
 .shop-tool {
     display: flex;
@@ -105,14 +110,4 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px);}
     to { opacity: 1; transform: translateY(0);}
-}
-
-.shop-page {
-    margin-left: 180px;
-    transition: margin-left 0.2s;
-    position: relative;
-}
-
-.shop-page.collapsed {
-    margin-left: 70px; 
 }
