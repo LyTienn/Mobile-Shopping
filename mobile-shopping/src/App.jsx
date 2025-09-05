@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import HeaderBar from './components/Header/Header';
 import LeftBar from './components/LeftBar/LeftBar';
+import { AvatarProvider } from './pages/Context/AvatarContext';
 import './App.css';
 
 //lazy loading
@@ -28,8 +29,23 @@ const MainLayout = () => {
     });
   };
 
+  const handleChangeQuantity = (id, newQty) => {
+    setCartItems(prev => 
+      cartItems.map(item => 
+        item.id === id
+          ? { ...item, quantity: newQty > 0 ? newQty : 1 }
+          : item  
+      )
+    );
+  };
+
+  const handleRemoveItem = (id) => {
+    setCartItems(items => items.filter(item => item.id !== id));
+  };
+
   return (
-    <div className='main-layout'>
+    <AvatarProvider>
+      <div className='main-layout'>
       <HeaderBar />
       <LeftBar collapsed={collapsed} setCollapsed={setCollapsed} />
 
@@ -41,7 +57,11 @@ const MainLayout = () => {
             <Route path="/shop/*" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
 
             {/* Route cho Cart */}
-            <Route path="/cart" element={<Cart cartItems={cartItems} collapsed={collapsed} />} />
+            <Route path="/cart" element={<Cart 
+            cartItems={cartItems} 
+            collapsed={collapsed}
+            onChangeQuantity={handleChangeQuantity}
+            onRemoveItem={handleRemoveItem} />} />
 
             {/* Route cho Profile */}
             <Route path="/profile" element={<Profile collapsed={collapsed} />} />
@@ -55,6 +75,7 @@ const MainLayout = () => {
         </Suspense>
       </div>
     </div>
+    </AvatarProvider>
   )
 }
 

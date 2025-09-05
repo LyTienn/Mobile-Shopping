@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button, notification } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
@@ -9,7 +9,7 @@ const Product = ({ productItems, collapsed, addToCart }) => {
     const { productId } = useParams();
     const product = productItems.find(p => p.id === Number(productId));
     const [api, contextHolder] = notification.useNotification();
-    
+    const navigate = useNavigate();
     const handleAddToCart = () => {
         addToCart(product);
         api.success({
@@ -20,6 +20,9 @@ const Product = ({ productItems, collapsed, addToCart }) => {
             duration: 3, 
         });
     };
+    const handleNavigateToCart = () => {
+        navigate('/cart');
+    }
     return (
         <div className={`product-page${collapsed ? ' collapsed' : ''}`}>
             {contextHolder}
@@ -44,6 +47,7 @@ const Product = ({ productItems, collapsed, addToCart }) => {
                             src={product.image} 
                             alt={product.name} 
                             className="product-detail-img"
+                            onClick={() => handleNavigateToProduct(product.id)}
                         />
                         <div className="product-actions">
                             <Button className='h2'

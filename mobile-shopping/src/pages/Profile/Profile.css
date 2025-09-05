@@ -1,0 +1,140 @@
+.profile-page {
+    top: 90px;
+    margin-left: 180px;
+    transition: margin-left 0.2s;
+    position: relative;
+}
+
+.profile-page.collapsed {
+    margin-left: 70px; 
+}
+
+.profile-page.collapsed .profile-header,
+.profile-header.collapsed,
+.profile-page.collapsed .profile-content {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2px;
+    position: fixed;
+    left: 0;
+    margin-left: 180px;
+    width: calc(100% - 180px);
+    transition: margin-left 0.2s, width 0.2s;
+    z-index: 10;
+    background-color: var(--color-p-23);
+}
+
+.profile-title {
+    padding: 4px 8px;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 100px;
+    transition: margin-left 0.2s, width 0.2s;
+}
+
+.profile-detail-container {
+    max-width: 1000px;
+    padding: 20px;
+    gap: 0;
+}
+
+.profile-main-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.profile-avatar-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0;
+}
+
+.profile-avatar-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.profile-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-p-1);
+    margin: 4px 36px;
+}
+
+.profile-name {
+    font-weight: 700;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.profile-email {
+    margin-bottom: 0;
+}
+
+.profile-info-col {
+    margin-left: 170px; 
+    min-width: 320px;
+    flex: 1;
+}
+
+.profile-info-table {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.profile-info-row {
+    display: flex;
+    align-items: center;
+    min-height: 32px;
+}
+
+.profile-info-label {
+    width: 170px;
+    margin: 0 16px;
+}
+
+.profile-info-value-underline {
+    border-bottom: 1px solid #222;
+    padding-bottom: 2px;
+    min-width: 320px;
+    display: inline-block;
+}
+
+/* RESPONSIVE STYLES */
+/* @media (max-width: 900px) {
+    .profile-content {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 16px;
+    }
+    .profile-avatar-col {
+        margin-bottom: 24px;
+        margin-right: 0;
+    }
+    .profile-info-col {
+        min-width: 0;
+    }
+}
+
+@media (min-width: 320px) {
+
+} */

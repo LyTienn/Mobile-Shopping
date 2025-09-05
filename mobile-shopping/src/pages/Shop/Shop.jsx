@@ -14,15 +14,16 @@ import './Shop.css';
 const Product = lazy(() => import('../Product/Product'));
 
 const productItems = [
-    { id: 1, name: 'Samsung Galaxy A31', price: '5.299.000 VNĐ', priceValue: 5299000, image: Samsung, rating: 4 },
-    { id: 2, name: 'iPhone 12', price: '12.000.000 VNĐ', priceValue: 12000000, image: Ip12, rating: 4.5 },
-    { id: 3, name: 'Xiaomi Redmi Note 10', price: '4.500.000 VNĐ', priceValue: 4500000, image: Xiaomi, rating: 4 },
-    { id: 4, name: 'Oppo A54', price: '3.990.000 VNĐ', priceValue: 3990000, image: Samsung, rating: 3 },
-    { id: 5, name: 'Vivo Y20s', price: '4.290.000 VNĐ', priceValue: 4290000, image: Samsung, rating: 4 },
-    { id: 6, name: 'Realme 8', price: '4.000.000 VNĐ', priceValue: 4000000, image: Samsung, rating: 4 },
+    { id: 1, name: 'Samsung Galaxy A31', price: '5.299.000 VNĐ', priceValue: 5299000, stock: 12, image: Samsung, rating: 4 },
+    { id: 2, name: 'iPhone 12', price: '11.000.000 VNĐ', priceValue: 11000000, stock: 15, image: Ip12, rating: 4 },
+    { id: 3, name: 'Xiaomi Redmi Note 10', price: '4.500.000 VNĐ', priceValue: 4500000, stock: 25, image: Xiaomi, rating: 4 },
+    { id: 4, name: 'Oppo A54', price: '3.990.000 VNĐ', priceValue: 3990000, stock: 35, image: Samsung, rating: 3 },
+    { id: 5, name: 'Vivo Y20s', price: '4.290.000 VNĐ', priceValue: 4290000, stock: 15, image: Samsung, rating: 4 },
+    { id: 6, name: 'Realme 8', price: '4.000.000 VNĐ', priceValue: 4000000, stock: 25, image: Samsung, rating: 4 },
+    { id: 7, name: 'Nokia 5.4', price: '3.500.000 VNĐ', priceValue: 3500000, stock: 7, image: Samsung, rating: 3.5 },
+    { id: 8, name: 'iPhone 13', price: '12.400.000 VNĐ', priceValue: 12400000, stock: 29, image: Ip12, rating: 4.5 },
 ];
 
-// Component hiển thị danh sách sản phẩm
 const ShopProductList = ({ handleViewProduct, collapsed }) => {
     const [showFilter, setShowFilter] = useState(false);
     const [filter, setFilter] = useState({
