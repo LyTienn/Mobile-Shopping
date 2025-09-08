@@ -1,8 +1,31 @@
+@import "tailwindcss";
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0;
   text-align: center;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.leftbar-and-content {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  /* position: static; */
+  /* height: calc(100vh - 92px); */
+}
+
+.main-content {
+  width: calc(100% - 180px);
+}
+
+.main-content.collapsed {
+  width: calc(100% - 70px);
 }
 
 /* .logo {

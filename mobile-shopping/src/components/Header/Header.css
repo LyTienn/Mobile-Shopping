@@ -6,8 +6,9 @@
     justify-content: space-between;
     padding: 8px 28px;
     box-sizing: border-box;
-    position: fixed;
+    /* position: fixed; */
     z-index: 10;
+    flex-shrink: 0;
 }
 
 .header-left {

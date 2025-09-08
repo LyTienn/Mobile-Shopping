@@ -46,33 +46,36 @@ const MainLayout = () => {
   return (
     <AvatarProvider>
       <div className='main-layout'>
-      <HeaderBar />
-      <LeftBar collapsed={collapsed} setCollapsed={setCollapsed} />
+        <HeaderBar />
+        <div className="leftbar-and-content">
+          
+        <LeftBar collapsed={collapsed} setCollapsed={setCollapsed} />
 
-      {/*<MainContent />*/}
-      <div className={`main-content${collapsed ? ' collapsed' : ''}`}>
-        <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
-          <Routes>
-            {/* Route cho Shop với nested routing */}
-            <Route path="/shop/*" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
+        {/*<MainContent />*/}
+        <div className={`main-content${collapsed ? ' collapsed' : ''}`}>
+          <Suspense fallback={<div className="loading-spinner">Loading...</div>}>
+            <Routes>
+              {/* Route cho Shop với nested routing */}
+              <Route path="/shop/*" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
 
-            {/* Route cho Cart */}
-            <Route path="/cart" element={<Cart 
-            cartItems={cartItems} 
-            collapsed={collapsed}
-            onChangeQuantity={handleChangeQuantity}
-            onRemoveItem={handleRemoveItem} />} />
+              {/* Route cho Cart */}
+              <Route path="/cart" element={<Cart 
+              cartItems={cartItems} 
+              collapsed={collapsed}
+              onChangeQuantity={handleChangeQuantity}
+              onRemoveItem={handleRemoveItem} />} />
 
-            {/* Route cho Profile */}
-            <Route path="/profile" element={<Profile collapsed={collapsed} />} />
-            
-            {/* Default route - Shop */}
-            <Route path="/" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
+              {/* Route cho Profile */}
+              <Route path="/profile" element={<Profile collapsed={collapsed} />} />
+              
+              {/* Default route - Shop */}
+              <Route path="/" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
 
-            {/* Catch-all route */}
-            <Route path="*" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
-          </Routes>
-        </Suspense>
+              {/* Catch-all route */}
+              <Route path="*" element={<Shop collapsed={collapsed} addToCart={addToCart} />} />
+            </Routes>
+          </Suspense>
+        </div>
       </div>
     </div>
     </AvatarProvider>

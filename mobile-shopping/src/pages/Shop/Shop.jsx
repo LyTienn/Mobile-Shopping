@@ -78,7 +78,7 @@ const ShopProductList = ({ handleViewProduct, collapsed }) => {
                             onMouseLeave={() => setShowFilter(false)}
                             style={{
                                 position: 'absolute',
-                                top: '110px',
+                                top: '230px',
                                 right: 0,
                                 zIndex: 10
                             }}
@@ -98,11 +98,12 @@ const ShopProductList = ({ handleViewProduct, collapsed }) => {
                 <div className='shop-product-list'>
                     {searchProduct.map(item => (
                         <div className='shop-product-item' key={item.id}>
-                            <div className='shop-product-interact'>
-                                <img src={item.image} alt={item.name} />
-                                <Button type='default' className='view-btn' onClick={() => handleViewProduct(item.id)}>
+                            {/* <div className='shop-product-interact'> */}
+                            <div className="!p-6">
+                                <img src={item.image} alt={item.name} onClick={() => handleViewProduct(item.id)} />
+                                {/* <Button type='default' className='view-btn' onClick={() => handleViewProduct(item.id)}>
                                     View
-                                </Button>
+                                </Button> */}
                             </div>
                             <div className='shop-product-info'>
                                 <h3 className='p1-b'>{item.name}</h3>

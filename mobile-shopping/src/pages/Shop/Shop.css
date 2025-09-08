@@ -1,18 +1,20 @@
 .shop-page{
+    width: 100%;
     top: 90px;
-    margin-left: 180px;
-    transition: margin-left 0.2s;
-    position: relative;
+    /* margin-left: 180px; */
+    transition: width 0.2s;
+    /* position: relative; */
 }
 
 .shop-page.collapsed {
-    margin-left: 70px; 
+    /* margin-left: 70px;  */
+    width: 100%;
 }
 
 .shop-page.collapsed .shop-header,
 .shop-header.collapsed {
-    margin-left: 70px;
-    width: calc(100% - 70px);
+    /* margin-left: 70px; */
+    width: 100%;
 }
 
 .shop-header {
@@ -20,10 +22,10 @@
     justify-content: space-between;
     align-items: flex-end;
     margin-top: 2px;
-    position: fixed;
+    /* position: fixed; */
     left: 0;
-    margin-left: 180px;
-    width: calc(100% - 180px);
+    /* margin-left: 180px; */
+    width: 100%;
     transition: margin-left 0.2s, width 0.2s;
     z-index: 10;
     border-bottom: 1px solid var(--color-dark-1);

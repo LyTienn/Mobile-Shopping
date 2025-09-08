@@ -36,7 +36,7 @@ const LeftBar = ({ collapsed, setCollapsed }) => {
                         <span className="leftbar-icon">
                             <img src={item.icon} alt={`${item.label} icon`} />
                         </span>
-                        {!collapsed && <span className="leftbar-label p1-r">{item.label}</span>}
+                        {!collapsed && <span className="leftbar-label !text-base p1-r">{item.label}</span>}
                     </Link>
                 ))}
             </div>

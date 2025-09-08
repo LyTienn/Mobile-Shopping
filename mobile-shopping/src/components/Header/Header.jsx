@@ -21,7 +21,7 @@ const Header = () => {
         <header className='header-container'>
             <div className='header-left'>
                 <img src={Logo} alt='logo' className='header-logo' onClick={handleNavigateDashboard}/>
-                <span className='header-title h1'>Mobile Shopping</span>
+                <span className='header-title text-lg sm:text-xl md:text-2xl lg:text-3xl'>Mobile Shopping</span>
             </div>
             <div className='header-right'>
                 <img src={avatar} alt='avatar' className='header-avatar' onClick={handleViewProfile}/>

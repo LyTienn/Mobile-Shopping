@@ -7,7 +7,8 @@ const Cart = ({ cartItems, collapsed, onChangeQuantity, onRemoveItem }) => {
         <div className={`cart-page${collapsed ? ' collapsed' : ''}`}>
             <div className='cart-header'>
                 <div className='cart-title-container'>
-                    <div className='cart-title h2'>Cart</div>
+                    {/* <h2 className='cart-title text-blue'>Cart</h2> */}
+                    <h2 className="!font-bold text-2xl !p-6">Cart</h2>
                 </div>
                 <div className='cart-info'>
                     {cartItems.length > 0 && (

@@ -35,6 +35,7 @@ const Product = ({ productItems, collapsed, addToCart }) => {
                     src={Cart}
                     alt='cart'
                     style={{ cursor: 'pointer' }}
+                    onClick={handleNavigateToCart}
                 />
             </div>
             
@@ -47,7 +48,6 @@ const Product = ({ productItems, collapsed, addToCart }) => {
                             src={product.image} 
                             alt={product.name} 
                             className="product-detail-img"
-                            onClick={() => handleNavigateToProduct(product.id)}
                         />
                         <div className="product-actions">
                             <Button className='h2'
