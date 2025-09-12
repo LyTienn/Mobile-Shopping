@@ -1,20 +1,16 @@
 import './Search.css';
-import search from '../../assets/images/Search.png';
 
 const Search = ({ value, onChange, ...props }) => {
     return (
-        <div className="search-container">
+        <div className="search-container w-48 sm:w-64 md:w-80 lg:w-96">
             <input 
                 type="text" 
-                className="search-input h3" 
+                className="search-input h-1" 
                 placeholder="Search..."
                 value={value}
                 onChange={ onChange }
                 {...props} 
             />
-            <span className='search-icon'>
-                <img src={search} alt='search' />
-            </span>
         </div>
     );
 };

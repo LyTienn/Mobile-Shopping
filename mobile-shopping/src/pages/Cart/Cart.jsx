@@ -1,13 +1,34 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import {
+  removeFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  clearCart,
+  updateQuantity,
+} from "../../redux/cart/CartSlice";
 import { CloseOutlined } from '@ant-design/icons';
 import './Cart.css';
 
-const Cart = ({ cartItems, collapsed, onChangeQuantity, onRemoveItem }) => {
+const Cart = ({  collapsed }) => {
+    const cartItems = useSelector((state) => state.cart.items);
+    const dispatch = useDispatch();
+    const token = useSelector((state) => state.user.token);
+
+    if (!token) {
+        return (
+        <div className="p-6 bg-white rounded-lg">
+            <Title level={2}>Giỏ hàng</Title>
+            <p className="text-lg mt-4 text-red-600">
+            Vui lòng đăng nhập để sử dụng giỏ hàng.
+            </p>
+        </div>
+        );
+    }
     return (
         <div className={`cart-page${collapsed ? ' collapsed' : ''}`}>
             <div className='cart-header'>
                 <div className='cart-title-container'>
-                    {/* <h2 className='cart-title text-blue'>Cart</h2> */}
                     <h2 className="!font-bold text-2xl !p-6">Cart</h2>
                 </div>
                 <div className='cart-info'>

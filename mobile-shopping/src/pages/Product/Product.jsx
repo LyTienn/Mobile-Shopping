@@ -1,65 +1,154 @@
+import React, { useState, useEffect } from 'react'; 
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDetailProductThunk } from '../../redux/product/ProductThunk';
 import { Button, notification } from 'antd';
-import { CheckCircleOutlined } from '@ant-design/icons';
+import { toast } from "react-toastify";
+import { CheckCircleOutlined, ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
+import { addToCart } from "../../redux/cart/CartSlice";
 import Cart from '../../assets/images/cart.png';
 import './Product.css';
 
-const Product = ({ productItems, collapsed, addToCart }) => {
-    const { productId } = useParams();
-    const product = productItems.find(p => p.id === Number(productId));
+const Product = ({ collapsed }) => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const token = useSelector((state) => state.user.token);
+    const detailProduct = useSelector((state) => state.product.detailProduct);
+    const loading = useSelector((state) => state.product.loading);
+    const [selectedImage, setSelectedImage] = useState(0);
     const [api, contextHolder] = notification.useNotification();
     const navigate = useNavigate();
-    const handleAddToCart = () => {
-        addToCart(product);
+
+    useEffect(() => {
+        dispatch(fetchDetailProductThunk(id));
+    }, [id, dispatch]);
+
+    useEffect(() => {
+        if (detailProduct) {
+        setSelectedImage(detailProduct.thumbnail || detailProduct.images?.[0]);
+        }
+    }, [detailProduct]);
+
+    const handleAddToCart = (e) => {
+        e.stopPropagation();
+        if(!token) {
+            toast.error('Vui lòng đăng nhập!');
+            return;
+        }
+        dispatch(addToCart(detailProduct));
         api.success({
             message: 'Thêm vào giỏ hàng thành công!',
-            description: `${product.name} đã được thêm vào giỏ hàng của bạn.`,
+            description: `${detailProduct.title} đã được thêm vào giỏ hàng của bạn.`,
             placement: 'topRight',
             icon: <CheckCircleOutlined style={{ color: '#1a8ec4ff' }} />,
             duration: 3, 
         });
     };
+
+    const handleBuyNow = (e) => {
+        e.stopPropagation();
+        if (!token) {
+        toast.error("Vui lòng đăng nhập.");
+        return;
+        }
+        dispatch(addToCart(detailProduct));
+        api.success({
+            message: 'Thêm vào giỏ hàng thành công!',
+            description: `${detailProduct.title} đã được thêm vào giỏ hàng của bạn.`,
+            placement: 'topRight',
+            icon: <CheckCircleOutlined style={{ color: '#1a8ec4ff' }} />,
+            duration: 3, 
+        });
+        navigate("/cart");
+    };
+
     const handleNavigateToCart = () => {
         navigate('/cart');
     }
+
+    if (loading || !detailProduct) return <p>Đang tải dữ liệu...</p>;
+
     return (
         <div className={`product-page${collapsed ? ' collapsed' : ''}`}>
             {contextHolder}
             <div className='product-header'>
                 <div className='product-title-container'>
-                    <div className='product-title h2'>Shop</div>
-                    <Breadcrumb />
+                    <div className='product-title text-2xl'>Shop</div>
+                    <div className='product-breadcrumb-and-cart'>
+                        <Breadcrumb />
+                        <img className='cart-tool'
+                        src={Cart}
+                        alt='cart'
+                        style={{ cursor: 'pointer' }}
+                        onClick={handleNavigateToCart}
+                        />
+                    </div>
                 </div>
-                <img className='cart-tool'
-                    src={Cart}
-                    alt='cart'
-                    style={{ cursor: 'pointer' }}
-                    onClick={handleNavigateToCart}
-                />
             </div>
-            
-            <hr />
 
             <div className='product-content'>
                 <div className='product-detail-container'>
                     <div className='product-image-section'>
-                        <img 
-                            src={product.image} 
-                            alt={product.name} 
-                            className="product-detail-img"
-                        />
+                        <div className="product-detail-img">
+                            <img
+                                src={selectedImage}
+                                alt={detailProduct.title}
+                                className="w-full h-full object-cover rounded-lg shadow"
+                                style={{ marginBottom: "20px" }}
+                            />
+                            <div
+                                className={`flex gap-2 ${
+                                    detailProduct.images?.length > 1 ? "overflow-x-auto" : ""
+                                }`}
+                                >
+                                {detailProduct.images?.map((img, idx) => (
+                                    <img
+                                    key={idx}
+                                    src={img}
+                                    alt={`Thumbnail ${idx}`}
+                                    onClick={() => setSelectedImage(img)}
+                                    className={`w-16 h-16 object-cover rounded cursor-pointer border-2 transition ${
+                                        img === selectedImage
+                                        ? "border-blue-500"
+                                        : "border-transparent"
+                                    }`}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='product-info-section'>
+                        <h2 className="product-name">{detailProduct.title}</h2>
+                        <div className="product-price p1-b" style={{ 
+                            color: '#e74c3c', 
+                        }}>
+                            ${detailProduct.price}
+                        </div>
+
+                        <div className="product-description">
+                            <p className='p3-r' style={{ color: '#666' }}>
+                                {detailProduct.title} là một sản phẩm chất lượng cao với thiết kế hiện đại và tính năng vượt trội. 
+                                Sản phẩm được đánh giá {detailProduct.rating}/5 sao bởi người dùng và có giá cạnh tranh trên thị trường.
+                                Đây là lựa chọn hoàn hảo cho những ai đang tìm kiếm một thiết bị di động đáng tin cậy và hiệu quả.
+                            </p>
+                        </div>
+                         <div className="product-rating p2-r">
+                            <span>Đánh giá: {detailProduct.rating} ⭐</span>
+                            <span style={{ color: '#666' }}>({Math.floor(Math.random() * 100) + 50} đánh giá)</span>
+                        </div>
                         <div className="product-actions">
                             <Button className='h2'
                                 type="primary" 
                                 size="large"
                                 style={{ 
-                                    flex: '1', 
+                                    
                                     maxWidth: '170px',
                                     height: '48px',
                                     fontSize: '16px',
                                     fontWeight: 'bold',
-                                    backgroundColor: 'var(--color-addtocart-btn',
+                                    backgroundColor: 'var(--color-addtocart-btn)',
                                 }}
                                 onClick={handleAddToCart}
                             >
@@ -76,60 +165,10 @@ const Product = ({ productItems, collapsed, addToCart }) => {
                                     fontWeight: 'bold',
                                     backgroundColor: 'var(--color-purchase-btn)',
                                 }}
+                                onClick={handleBuyNow}
                             >
                                 Mua ngay
                             </Button>
-                        </div>
-                    </div>
-
-                    <div className='product-info-section'>
-                        <h1 className="product-name">{product.name}</h1>
-                        <div className="product-price p1-b" style={{ 
-                            color: '#e74c3c', 
-                        }}>
-                            {product.price}
-                        </div>
-                        
-                        <div className="product-rating p2-r">
-                            <span>Đánh giá: {product.rating} ⭐</span>
-                            <span style={{ color: '#666' }}>({Math.floor(Math.random() * 100) + 50} đánh giá)</span>
-                        </div>
-
-                        <div className="product-specs">
-                            <h3 style={{ 
-                                marginBottom: '16px', 
-                                fontSize: '18px',
-                                fontWeight: 'bold' 
-                            }}>
-                                Thông tin chung:
-                            </h3>
-                            <div style={{ 
-                                display: 'grid', 
-                                gridTemplateColumns: '1fr 1fr', 
-                                gap: '12px',
-                                fontSize: '14px'
-                            }}>
-                                <div><strong>Mã sản phẩm:</strong> SP{product.id.toString().padStart(4, '0')}</div>
-                                <div><strong>Giá gốc:</strong> {product.priceValue.toLocaleString('vi-VN')} VNĐ</div>
-                                <div><strong>Đánh giá:</strong> {product.rating}/5 sao</div>
-                                <div><strong>Tình trạng:</strong> <span style={{color: '#28a745'}}>Còn hàng</span></div>
-                                <div><strong>Bảo hành:</strong> 12 tháng</div>
-                                <div><strong>Xuất xứ:</strong> Việt Nam</div>
-                            </div>
-                        </div>
-
-                        <div className="product-description">
-                            <h3 style={{  
-                                fontSize: '18px',
-                                fontWeight: 'bold' 
-                            }}>
-                                Mô tả sản phẩm:
-                            </h3>
-                            <p className='p3-r' style={{ color: '#666' }}>
-                                {product.name} là một sản phẩm chất lượng cao với thiết kế hiện đại và tính năng vượt trội. 
-                                Sản phẩm được đánh giá {product.rating}/5 sao bởi người dùng và có giá cạnh tranh trên thị trường.
-                                Đây là lựa chọn hoàn hảo cho những ai đang tìm kiếm một thiết bị di động đáng tin cậy.
-                            </p>
                         </div>
                     </div>
                 </div>

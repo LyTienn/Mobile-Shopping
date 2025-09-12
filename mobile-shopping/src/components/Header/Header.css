@@ -1,14 +1,14 @@
-.header-container {
-    width: 100vw;
+/* .header-container {
+    width: 100%;
     background: var(--color-header);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 28px;
+    padding: 0 24px;
     box-sizing: border-box;
-    /* position: fixed; */
+    position: sticky;
     z-index: 10;
-    flex-shrink: 0;
+    top: 0;
 }
 
 .header-left {
@@ -23,8 +23,8 @@
 }
 
 .header-logo {
-    width: 88px;
-    height: 76px;
+    width: 65px;
+    height: 60px;
     cursor: pointer;
 }
 
@@ -34,4 +34,4 @@
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
-}
+} */

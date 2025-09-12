@@ -1,5 +1,4 @@
-import { useState, useContext } from 'react';
-import { AvatarContext } from '../Context/AvatarContext';
+import { useState } from 'react';
 import { DownOutlined, CalendarOutlined } from '@ant-design/icons';
 import { DatePicker, Dropdown, Menu } from 'antd';
 import moment from 'moment';
@@ -12,17 +11,6 @@ const sexOptions = [
 ];
 
 const Profile = ({ collapsed }) => {
-    const { avatar, setAvatar } = useContext(AvatarContext);
-    const handleAvatarChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                setAvatar(ev.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
     const [profile, setProfile] = useState({
         dob: '2018-01-01',
         sex: 'Male',
@@ -31,10 +19,10 @@ const Profile = ({ collapsed }) => {
         email: 'user@gmail.com',
         name: 'MR. USER'
     });
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProfile(prev => ({ ...prev, [name]: value }));
-    }
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setProfile(prev => ({ ...prev, [name]: value }));
+    // }
     const handleDateChange = (date, dateString) => {
     setProfile(prev => ({ ...prev, dob: dateString }));
     };
@@ -57,17 +45,17 @@ const Profile = ({ collapsed }) => {
                     <div className="profile-avatar-block">
                         <div className="profile-avatar-row">
                             <label style={{ cursor: 'pointer' }}>
-                                <img
+                                {/* <img
                                     className="profile-avatar"
                                     src={avatar}
                                     alt="avatar"
-                                />
-                                <input
+                                /> */}
+                                {/* <input
                                     type="file"
                                     accept="image/*"
                                     style={{ display: 'none' }}
                                     onChange={handleAvatarChange}
-                                />
+                                /> */}
                             </label>
                             <div className="profile-main-info">
                                 <div className="profile-name h2">{profile.name}</div>

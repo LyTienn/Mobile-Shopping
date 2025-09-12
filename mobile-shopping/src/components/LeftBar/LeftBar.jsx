@@ -12,11 +12,20 @@ const menuItems = [
 ];
 
 const LeftBar = ({ collapsed, setCollapsed }) => {
-    
     const location = useLocation();
-
     const handleCollapse = () => setCollapsed(!collapsed);
 
+    useEffect(() => {
+        const handleResize = () => {
+            if(window.innerWidth <= 768) {
+                setCollapsed(true);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        handleResize();
+        return () => window.removeEventListener('resize', handleResize);
+    }, [setCollapsed]);
+    
     return (
         <div className={`leftbar-container${collapsed ? ' collapsed' : ''}`}>
             <div className="leftbar-header">

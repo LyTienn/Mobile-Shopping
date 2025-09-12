@@ -2,9 +2,18 @@
     display: flex;
     align-items: center;
     border: 1px solid var(--color-dark-1);
-    border-radius: 4px;
-    width: 350px;
+    border-radius: 8px;
+    border-color: var(--color-p-1);
+    /* width: 350px; */
     position: relative;
+}
+
+.search-container:hover {
+    border-color: var(--color-purchase-btn);
+    transition: 0.2s ease-in-out;
+}
+.search-container:focus-within {
+    border-color: var(--color-purchase-btn);
 }
 
 .search-input {

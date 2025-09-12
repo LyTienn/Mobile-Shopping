@@ -1,33 +1,111 @@
-import { useState, useEffect, useContext } from 'react';
-import { AvatarContext } from '../../pages/Context/AvatarContext';
-import './Header.css';
-import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../assets/images/Logo.png';
-// import Avatar from '../../assets/images/avatar.png';
+import { Link } from "react-router-dom";
+import { Layout, Avatar, Dropdown, Button} from "antd";
+import {
+  UserOutlined,
+  LogoutOutlined,
+  LoginOutlined,
+} from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/user/UserSlice";
+import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/images/Logo.png";
+import { toast } from "react-toastify";
+
+const { Header: AntHeader } = Layout;
 
 const Header = () => {
-    const { avatar } = useContext(AvatarContext);
-    const navigate = useNavigate();
-    const handleViewProfile = () => {
-        navigate('/profile');
-    }
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.profile);
 
-    const handleNavigateDashboard = () => {
-        navigate('/');
-        window.location.reload();
-    };
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("token");
+    toast.success("Bạn đã đăng xuất thành công!");
+    navigate("/shop");
+  };
 
-    return (
-        <header className='header-container'>
-            <div className='header-left'>
-                <img src={Logo} alt='logo' className='header-logo' onClick={handleNavigateDashboard}/>
-                <span className='header-title text-lg sm:text-xl md:text-2xl lg:text-3xl'>Mobile Shopping</span>
-            </div>
-            <div className='header-right'>
-                <img src={avatar} alt='avatar' className='header-avatar' onClick={handleViewProfile}/>
-            </div>
-        </header>
-    )
-}
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  return (
+    <AntHeader
+      style={{
+        width: "100%",
+        backgroundColor: "var(--color-header)", 
+        padding: "0 24px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        position: "fixed",
+        top: 0,
+        zIndex: 100,
+      }}
+    >
+      <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+        <div
+          className="flex items-center cursor-pointer"
+          style={{ display: "flex", alignItems: "center", gap: 8 }}
+        >
+          <img src={Logo} alt="Logo" style={{ width: 50, height: 40 }} />
+          <h1 
+            style={{
+              margin: 0,
+              fontSize: 18,
+              fontWeight: "bold",
+              textTransform: "uppercase",
+            }}
+          >
+            Mobile Shopping
+          </h1>
+        </div>
+      </Link>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        {user ? (
+          <Dropdown
+            menu={{ 
+                items: [
+                    {
+                        key: "profile",
+                        icon: <UserOutlined />, 
+                        label: "Thông tin cá nhân", 
+                        onClick: () => navigate("/profile") 
+                    },
+                    {
+                        type: "divider",
+                    },
+                    { 
+                        key: "logout",
+                        icon: <LogoutOutlined />, 
+                        label: "Đăng xuất", 
+                        onClick: handleLogout 
+                    },
+                ], 
+            }}
+            placement="bottomRight"
+            trigger={["click"]}
+          >
+            <Avatar
+              src={user.image || Logo}
+              size="large"
+              style={{ 
+                cursor: "pointer", 
+                backgroundColor: "#fff",
+                marginRight: 40,
+              }}
+              icon={<UserOutlined />}
+            />
+          </Dropdown>
+        ) : (
+          <Button icon={<LoginOutlined />} type="primary" onClick={handleLogin} style={{ marginRight: 40 }}>
+            Đăng nhập
+          </Button>
+        )}
+      </div>
+    </AntHeader>
+  );
+};
 
 export default Header;

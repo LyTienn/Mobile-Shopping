@@ -31,27 +31,27 @@ const Breadcrumbs = () => {
             if (idx === itemsArr.length - 1 || !config.to) {
                 return (
                     <Breadcrumb.Item key={idx}>
-                        <span className="h3">{config.label}</span>
+                        <span className="text-xl">{config.label}</span>
                     </Breadcrumb.Item>
                 );
             }
             return (
                 <Breadcrumb.Item key={idx}>
-                    <Link to={config.to} className="h3">{config.label}</Link>
+                    <Link to={config.to} className="text-xl">{config.label}</Link>
                 </Breadcrumb.Item>
             );
         }
         // Nếu không có config thì hiển thị tên gốc
         return (
             <Breadcrumb.Item key={idx}>
-                <span className="h3">{item}</span>
+                <span className="text-xl">{item}</span>
             </Breadcrumb.Item>
         );
     });
 
     return (
-        <nav className="breadcrumbs" style={{ padding: '8px 0', marginLeft: '8px' }}>
-            <Breadcrumb separator={<span style={{ fontSize: '26px' }}>/</span>}>
+        <nav className="breadcrumbs" style={{ padding: '8px 0' }}>
+            <Breadcrumb separator={<span style={{ fontSize: '18px' }}>/</span>}>
                 {items}
             </Breadcrumb>
         </nav>
