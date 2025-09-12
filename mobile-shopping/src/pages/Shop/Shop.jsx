@@ -1,6 +1,6 @@
     import { useState, Suspense, lazy, useEffect } from 'react';
     import { useNavigate, Routes, Route } from 'react-router-dom';
-    import { fetchAllProduct } from "../../services/ProductServices";
+    // import { fetchAllProduct } from "../../services/ProductServices";
     import { fetchAllProductsThunk } from "../../redux/product/ProductThunk";
     import { useDispatch, useSelector } from "react-redux";
     import ProductCard from '../../components/Card/ProductCard'; 
@@ -65,10 +65,6 @@
 
             return matchSearch && matchPrice && matchRating;
         });
-
-        // const roundToHalf = (num) => {
-        //     return Math.round(num * 2) / 2;
-        // };
 
         return (
             <div className={`shop-page${collapsed ? ' collapsed' : ''}`}>

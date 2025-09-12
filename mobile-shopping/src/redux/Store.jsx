@@ -15,22 +15,8 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: "root",
-  version: 2, 
   storage,
-  migrate: (persistedState) => {
-    // Tùy chọn: lọc bỏ những key không còn dùng
-    if (persistedState) {
-      const migratedState = {};
-      for (const key of allowedReducerKeys) {
-        if (key in persistedState) {
-          migratedState[key] = persistedState[key];
-        }
-      }
-      console.log("Redux state đã migrate:", migratedState);
-      return Promise.resolve(migratedState);
-    }
-    return Promise.resolve(persistedState);
-  },
+  whitelist: ["cart", "product"], // Chỉ cart và product được lưu trữ vào localStorage
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

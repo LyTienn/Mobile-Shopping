@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
   clearCart,
-  updateQuantity,
 } from "../../redux/cart/CartSlice";
 import { CloseOutlined } from '@ant-design/icons';
 import './Cart.css';
@@ -13,8 +11,8 @@ import './Cart.css';
 const Cart = ({  collapsed }) => {
     const cartItems = useSelector((state) => state.cart.items);
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.user.token);
 
+    const token = useSelector((state) => state.user.token);
     if (!token) {
         return (
         <div className="p-6 bg-white rounded-lg">
@@ -25,11 +23,16 @@ const Cart = ({  collapsed }) => {
         </div>
         );
     }
+
+    const subTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity,0);
+    const tax = subTotal * 0.1;
+    const grandTotal = subTotal + tax;
+
     return (
         <div className={`cart-page${collapsed ? ' collapsed' : ''}`}>
             <div className='cart-header'>
-                <div className='cart-title-container'>
-                    <h2 className="!font-bold text-2xl !p-6">Cart</h2>
+                <div>
+                    <div className="cart-title text-2xl">Cart</div>
                 </div>
                 <div className='cart-info'>
                     {cartItems.length > 0 && (
@@ -37,69 +40,73 @@ const Cart = ({  collapsed }) => {
                     )}
                 </div>
             </div>
-            <hr />
             {cartItems.length === 0 ? (
                 <div className='empty-cart'>Giỏ hàng rỗng</div>
             ) : (
-                <div className='cart-items'>
+                <div className="cart-body">
+                    <div className='cart-content space-y-4'>
                     {cartItems.map(item => (
-                        <div className='cart-item' key={item.id}>
-                            <img 
-                                src={item.image} 
-                                alt={item.name} 
-                                className='cart-item-img'  
-                            />
-                            <div className='cart-item-detail'>
-                                <b className='cart-item-name'>Điện thoại {item.name}</b>
-                                <div className='cart-item-price'>
-                                    <b>{item.price}</b>
+                        <div 
+                            className='cart-item grid grid-cols-6 gap-4 items-center border-b pb-4' 
+                            key={item.id}
+                        >
+                            <div className="col-span-1">
+                                <img
+                                src={item.thumbnail || item.image}
+                                alt={item.title}
+                                className="w-full rounded"
+                                />
+                            </div>
+                            <div className='col-span-3 flex flex-col text-left gap-4'>
+                                <b className='text-lg'> {item.title}</b>
+                                <div className=' text-red-500'>
+                                    <b>${item.price}</b>
                                 </div>
                             </div>
-                            <div className='cart-item-actions'>
+                            <div className='cart-item-actions col-span-2 flex justify-end'>
                                 <button className='cart-action-btn'
-                                onClick={() => onChangeQuantity(item.id, item.quantity + 1)}
+                                onClick={() => dispatch(increaseQuantity(item.id))}
                                 >+</button>
                                 <span className='cart-item-qty'>{item.quantity}</span>
                                 <button className='cart-action-btn'
-                                onClick={() => onChangeQuantity(item.id, item.quantity - 1)}
+                                onClick={() => dispatch(decreaseQuantity(item.id))}
                                 disabled={item.quantity <= 1}
                                 >-</button>
+                                <div className="col-span-2 flex justify-end">
+                                    <button
+                                    onClick={() => dispatch(removeFromCart(item.id))}
+                                    className="remove-cart bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700"
+                                    >
+                                    Xoá
+                                    </button>
+                                </div>
                             </div>
-                            <CloseOutlined onClick={() => onRemoveItem(item.id)} />
+                            <CloseOutlined onClick={() => dispatch(removeFromCart(item.id))} />
                         </div>
                     ))}
+                    </div>
+                    <div className='cart-total'>
+                        <div className='cart-total-row text-base'>
+                            <span>SubTotal:</span>
+                            <span className="text-red-600">${subTotal.toFixed(2)}</span>
+                        </div>
+                        <div className='cart-total-row text-base'>
+                            <span>Tax:</span>
+                            <span className="text-red-600">${tax.toFixed(2)}</span>
+                        </div>
+                        <div className='cart-total-row text-2xl'>
+                            <span>Total:</span>
+                            <span className="text-red-600 font-bold">${grandTotal.toFixed(2)}</span>
+                        </div>
+                        <button
+                            onClick={() => dispatch(clearCart())}
+                            className="remove-total mt-3 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        >
+                            Xoá toàn bộ giỏ hàng
+                        </button>
+                    </div>
                 </div>
             )}
-            <hr />
-            <div className='cart-total'>
-                <div className='cart-total-row'>
-                    <span>SubTotal:</span>
-                    <span>
-                        {cartItems
-                            .reduce((sum, item) => sum + item.priceValue * item.quantity, 0)
-                            .toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                        }
-                    </span>
-                </div>
-                <div className='cart-total-row'>
-                    <span>Tax:</span>
-                    <span>
-                        {(
-                            cartItems.reduce((sum, item) => sum + item.priceValue * item.quantity, 0) * 0.1)
-                            .toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                        }
-                    </span>
-                </div>
-                <div className='cart-total-row total-amount'>
-                    <span>Total:</span>
-                    <span>
-                        {(
-                            cartItems.reduce((sum, item) => sum + item.priceValue * item.quantity, 0) * 1.1)
-                            .toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })
-                        }
-                    </span>
-                </div>
-            </div>
         </div>
     )
 };

@@ -8,9 +8,12 @@ const handleLogin = async (username, password) => {
     });
 }
 
-const getUserProfile = async (token) => 
-    await axios.get("/auth/profile", {
-        headers: { Authorization: `Bearer ${token}`}
+const getUserProfile = async (token) => {
+    const res = await axios.get("/auth/profile", {
+        headers: { Authorization: `Bearer ${token}`,
+        },
     });
+    return res;
+};
 
 export { handleLogin, getUserProfile };

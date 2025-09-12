@@ -6,23 +6,12 @@ export const loginUser = createAsyncThunk(
   async ({ username, password }, { rejectWithValue }) => {
     try {
       const res = await handleLogin(username, password);
-      // const token = res.token;
-      // const user = res.user || res;
-      return {
-        user: {
-          id: res.id,
-          username: res.username,
-          email: res.email,
-          firstName: res.firstName,
-          lastName: res.lastName,
-          gender: res.gender,
-          image: res.image,
-        },
-        token: res.token, // Sửa lại đúng trường
-      }; 
+      const token = res.accessToken;
+      const user = res.user || res;
+      return {user,token}; 
     } catch (err) {
       return rejectWithValue(
-        err.message || "Lỗi đăng nhập"
+        err.response?.data?.message || "Lỗi đăng nhập"
       );
     }
   }

@@ -15,33 +15,6 @@ const Profile = lazy(() => import('./pages/Profile/Profile'));
 //main layout
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
-  // const addToCart = (product) => {
-  //   setCartItems(prev => {
-  //     const existingProduct = prev.find(item => item.id === product.id);
-  //     if(existingProduct) {
-  //       return prev.map(item =>
-  //         item.id === product.id
-  //           ? { ...item, quantity: item.quantity + 1}
-  //           : item
-  //       );
-  //     }
-  //     return [...prev, { ...product, quantity: 1}];
-  //   });
-  // };
-
-  // const handleChangeQuantity = (id, newQty) => {
-  //   setCartItems(prev => 
-  //     cartItems.map(item => 
-  //       item.id === id
-  //         ? { ...item, quantity: newQty > 0 ? newQty : 1 }
-  //         : item  
-  //     )
-  //   );
-  // };
-
-  // const handleRemoveItem = (id) => {
-  //   setCartItems(items => items.filter(item => item.id !== id));
-  // };
 
   return (
       <div className='main-layout'>
