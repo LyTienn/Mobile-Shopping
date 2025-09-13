@@ -6,7 +6,10 @@ import {
   clearCart,
 } from "../../redux/cart/CartSlice";
 import { CloseOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
 import './Cart.css';
+
+const { Title } = Typography;
 
 const Cart = ({  collapsed }) => {
     const cartItems = useSelector((state) => state.cart.items);

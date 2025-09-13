@@ -5,8 +5,6 @@ import productReducer from "./product/productSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-const allowedReducerKeys = ["cart", "user", "product"];
-
 const rootReducer = combineReducers({
   cart: cartReducer,
   user: userReducer,
@@ -16,7 +14,6 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["cart", "product"], // Chỉ cart và product được lưu trữ vào localStorage
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

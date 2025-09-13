@@ -85,8 +85,8 @@
                                 onMouseLeave={() => setShowFilter(false)}
                                 style={{
                                     position: 'absolute',
-                                    top: '200px',
-                                    right: 0,
+                                    top: '140px',
+                                    right: 4,
                                     zIndex: 10
                                 }}
                             >
@@ -113,7 +113,7 @@
                         </Col>
                     ))
                     ) : (
-                    <Col span={24} style={{ textAlign: "center" }}>
+                    <Col span={24} style={{ textAlign: "center", fontSize: 18 }}>
                         Không tìm thấy sản phẩm nào phù hợp với từ khóa "{search}"
                     </Col>
                     )}

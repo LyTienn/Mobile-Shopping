@@ -1,7 +1,7 @@
 import axios from "../config/Axios-config";
 
 const fetchAllProduct = () => {
-  return axios.get("/products?limit=10");
+  return axios.get("/products?limit=12");
 };
 
 const fetchDetailProduct = (id) => {

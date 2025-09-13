@@ -49,16 +49,15 @@ const Header = () => {
           style={{ display: "flex", alignItems: "center", gap: 8 }}
         >
           <img src={Logo} alt="Logo" style={{ width: 50, height: 40 }} />
-          <h1 
+          <div className="header-title text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl"
             style={{
               margin: 0,
-              fontSize: 18,
               fontWeight: "bold",
               textTransform: "uppercase",
             }}
           >
             Mobile Shopping
-          </h1>
+          </div>
         </div>
       </Link>
 

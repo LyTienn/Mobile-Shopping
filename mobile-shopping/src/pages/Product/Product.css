@@ -40,14 +40,13 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /* gap: 16px; */
 }
 
 .product-breadcrumb-and-cart .cart-tool {
     width: 28px;
     height: 28px;
     cursor: pointer;
-    margin-right: 18px;  
+    margin-right: 16px;  
 }
 
 .product-title {

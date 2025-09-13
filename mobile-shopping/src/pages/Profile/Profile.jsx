@@ -1,109 +1,68 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { fetchUserProfile } from '../../redux/user/UserThunk';
+import Logo from "../../assets/images/Logo.png";
 import { DownOutlined, CalendarOutlined } from '@ant-design/icons';
 import { DatePicker, Dropdown, Menu } from 'antd';
 import moment from 'moment';
+import { Typography, Descriptions, Avatar, Spin, Alert } from 'antd';
 import './Profile.css';
 
-const sexOptions = [
-    { label: 'Male', key: 'Male' },
-    { label: 'Female', key: 'Female' },
-    { label: 'Other', key: 'Other' }
-];
+const { Title, Text } = Typography;
 
-const Profile = ({ collapsed }) => {
-    const [profile, setProfile] = useState({
-        dob: '2018-01-01',
-        sex: 'Male',
-        company: '15, Duy Tan, Dich Vong Hau, Cau Giay, Ha Noi',
-        home: '15, Duy Tan, Dich Vong Hau, Cau Giay, Ha Noi',
-        email: 'user@gmail.com',
-        name: 'MR. USER'
-    });
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setProfile(prev => ({ ...prev, [name]: value }));
-    // }
-    const handleDateChange = (date, dateString) => {
-    setProfile(prev => ({ ...prev, dob: dateString }));
-    };
-    const dateValue = profile.dob ? moment(profile.dob, 'YYYY-MM-DD') : null;
-
-    const handleSexChange = ({ key }) => {
-        setProfile(prev => ({ ...prev, sex: key }));
-    };
-    const sexMenu = {
-        items: sexOptions,
-        onClick: handleSexChange,
-    };
-    return (
-        <div className={`profile-page${collapsed ? ' collapsed' : ''}`}>
-            <div className="profile-header">
-                <div className="profile-title h2">My Profile</div>
-            </div>
-            <div className="profile-content">
-                <div className="profile-detail-container">
-                    <div className="profile-avatar-block">
-                        <div className="profile-avatar-row">
-                            <label style={{ cursor: 'pointer' }}>
-                                {/* <img
-                                    className="profile-avatar"
-                                    src={avatar}
-                                    alt="avatar"
-                                /> */}
-                                {/* <input
-                                    type="file"
-                                    accept="image/*"
-                                    style={{ display: 'none' }}
-                                    onChange={handleAvatarChange}
-                                /> */}
-                            </label>
-                            <div className="profile-main-info">
-                                <div className="profile-name h2">{profile.name}</div>
-                                <div className="profile-email p2-r">{profile.email}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="profile-info-col">
-                        <div className="profile-info-table p2-r">
-                            <div className="profile-info-row">
-                                <span className="profile-info-label">Date of birth:</span>
-                                <span className="profile-info-value" style={{ display: 'flex', alignItems: 'center' }}>
-                                    <DatePicker
-                                        value={dateValue}
-                                        onChange={handleDateChange}
-                                        style={{ borderRadius: 4, fontSize: '1rem' }}
-                                        suffixIcon={<CalendarOutlined />}
-                                        format="YYYY-MM-DD"
-                                    />
-                                    </span>
-                            </div>
-                            <div className="profile-info-row">
-                                <span className="profile-info-label">Sex:</span>
-                                <span className="profile-info-value">
-                                    {profile.sex} 
-                                    <Dropdown menu={sexMenu} trigger={['click']}>
-                                        <DownOutlined style={{ marginLeft: 8, cursor: 'pointer' }} />
-                                    </Dropdown>
-                                </span>
-                            </div>
-                            <div className="profile-info-row">
-                                <span className="profile-info-label">Address Company:</span>
-                                <span className="profile-info-value">
-                                    {profile.company}
-                                </span>
-                            </div>
-                            <div className="profile-info-row">
-                                <span className="profile-info-label">Address Home:</span>
-                                <span className="profile-info-value profile-info-value-underline">
-                                    {profile.home}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+const Profile = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const token = useSelector((state) => state.user.token);
+    if(!token) {
+        return (
+        <div className="p-6 bg-white rounded-lg">
+            <Title level={2}>Thông tin cá nhân</Title>
+            <p className="text-lg mt-4 text-red-600">
+            Vui lòng đăng nhập để xem thông tin cá nhân.
+            </p>
         </div>
-    )
+        );
+    }
+    const { profile, loading, error } = useSelector(
+    (state) => state.user
+  );
+  console.log("Profile component rendered", profile);
+
+  return (
+    <div className="relative overflow-x-auto sm:rounded-lg h-full">
+      <div className="rounded-lg">
+        <div className='profile-title text-2xl font-bold flex'>Profile</div>
+
+        <div className="profile-content flex flex-col items-center gap-6 mb-6">
+          <Avatar src={profile.image || Logo} size={90} alt="Avatar" />
+          <div>
+            <Title level={4} className="mb-0">
+              {profile.firstName} {profile.lastName}
+            </Title>
+            <Text type="secondary">{profile.email}</Text>
+          </div>
+
+        <Descriptions className='profile-table' column={1} bordered size="medium">
+          <Descriptions.Item className='font-medium' label="Ngày sinh">
+            {profile.birthDate || "Chưa cập nhật"}
+          </Descriptions.Item>
+          <Descriptions.Item className='font-medium' label="Giới tính">
+            {profile.gender || "Chưa cập nhật"}
+          </Descriptions.Item>
+          <Descriptions.Item className='font-medium' label="Nơi làm việc">
+            {profile?.company?.address?.address}{" "}
+            {profile?.company?.address?.city || "Chưa cập nhật"}
+          </Descriptions.Item>
+          <Descriptions.Item className='font-medium' label="Địa chỉ nhà">
+            {profile?.address?.address} {profile?.address?.city || "Chưa cập nhật"}
+          </Descriptions.Item>
+        </Descriptions>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Profile;

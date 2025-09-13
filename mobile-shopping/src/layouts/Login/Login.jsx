@@ -36,16 +36,31 @@ const Login = () => {
             <div className="login-form">
                 <form onSubmit={handleSubmit}>
                     <input className="p2-r" type="text" value={username} placeholder="emilys" required onChange={(e) => setUsername(e.target.value)} />
-                    <input className="p2-r" type={showPass ? "text" : "password"} value={password}  placeholder="emilyspass" required onChange={(e) => setPassword(e.target.value)} />
-                    <span
-                        style={{
-                        cursor: "pointer"
-                        }}
-                        className="absolute top-97 right-145 text-sm text-gray-500"
-                        onClick={() => setShowPass(!showPass)}
-                    >
-                        {!showPass ? <FaEyeSlash /> : <FaEye />}
-                    </span>
+                    <div style={{ position: "relative" }}>
+                        <input
+                            className="p2-r"
+                            type={showPass ? "text" : "password"}
+                            value={password}
+                            placeholder="emilyspass"
+                            required
+                            onChange={(e) => setPassword(e.target.value)}
+                            style={{ width: "100%" }}
+                        />
+                        <span
+                            style={{
+                                position: "absolute",
+                                right: 12,
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                                cursor: "pointer",
+                                fontSize: "1.2rem",
+                                color: "#888"
+                            }}
+                            onClick={() => setShowPass(!showPass)}
+                        >
+                            {!showPass ? <FaEyeSlash /> : <FaEye />}
+                        </span>
+                    </div>
                     <div className="checkbox-row">
                         <div className="checkbox-label-group">
                             <input className="p3-r" type="checkbox" id="remember" />

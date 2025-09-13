@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDetailProductThunk } from '../../redux/product/ProductThunk';
 import { Button, notification } from 'antd';
 import { toast } from "react-toastify";
-import { CheckCircleOutlined, ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined } from '@ant-design/icons';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
 import { addToCart } from "../../redux/cart/CartSlice";
-import Cart from '../../assets/images/cart.png';
+import { TiShoppingCart } from "react-icons/ti";
 import './Product.css';
 
 const Product = ({ collapsed }) => {
@@ -18,6 +18,11 @@ const Product = ({ collapsed }) => {
     const loading = useSelector((state) => state.product.loading);
     const [selectedImage, setSelectedImage] = useState(0);
     const [api, contextHolder] = notification.useNotification();
+    const cartItems = useSelector((state) => state.cart.items);
+    const cartQuantity = cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -75,14 +80,17 @@ const Product = ({ collapsed }) => {
             <div className='product-header'>
                 <div className='product-title-container'>
                     <div className='product-title text-2xl'>Shop</div>
-                    <div className='product-breadcrumb-and-cart'>
+                    <div className='product-breadcrumb-and-cart relative'>
                         <Breadcrumb />
-                        <img className='cart-tool'
-                        src={Cart}
-                        alt='cart'
+                        <TiShoppingCart className='cart-tool text-gray-700 hover:text-gray-900 transition'
                         style={{ cursor: 'pointer' }}
                         onClick={handleNavigateToCart}
                         />
+                        {cartQuantity > 0 && (
+                        <span className="absolute -top-1 right-8 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                            {cartQuantity}
+                        </span>
+                        )}
                     </div>
                 </div>
             </div>
