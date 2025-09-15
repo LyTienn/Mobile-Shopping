@@ -12,17 +12,19 @@
 
     // Lazy load Product component
     const Product = lazy(() => import('../Product/Product'));
+    const defaultFilter = {
+        priceFrom: 0,
+        priceTo: 5000, 
+        ratingFrom: 0,
+        ratingTo: 5,
+    };
 
     const ShopProductList = ({ handleViewProduct, collapsed }) => {
         const productItems = useSelector(state => state.product.allProducts);
         const [showFilter, setShowFilter] = useState(false);
-        const [filter, setFilter] = useState({
-            priceFrom: 0,
-            priceTo: 5000,
-            ratingFrom: 0,
-            ratingTo: 5
-        });
+        const [filter, setFilter] = useState(defaultFilter);
         const [pendingFilter, setPendingFilter] = useState(filter);
+        const [filterKey, setFilterKey] = useState(0);
         const [search, setSearch] = useState("");
         const [currentPage, setCurrentPage] = useState(1);
         const [pageSize, setPageSize] = useState(12);
@@ -36,8 +38,9 @@
             setCurrentPage(1);
         }
 
-        const handleResetFilter = (resetFilters) => {
-            setPendingFilter(resetFilters);
+        const handleResetFilter = () => {
+            setPendingFilter(defaultFilter);
+            setFilterKey(prev => prev + 1);
         }
 
         const searchProduct = (productItems || []).filter((p) => {
@@ -100,6 +103,7 @@
                                 }}
                             >
                                 <Filter1
+                                    key={filterKey}
                                     filter={pendingFilter} 
                                     onFilterChange={handleFilterChange}
                                     onReset={handleResetFilter}
@@ -123,7 +127,7 @@
                     ))
                     ) : (
                     <Col span={24} style={{ textAlign: "center", fontSize: 18 }}>
-                        Không tìm thấy sản phẩm nào phù hợp với từ khóa "{search}"
+                        Sản phẩm không tồn tại
                     </Col>
                     )}
                 </Row>

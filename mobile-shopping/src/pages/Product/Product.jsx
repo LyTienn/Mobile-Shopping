@@ -119,7 +119,7 @@ const Product = ({ collapsed }) => {
                                         <img
                                             src={img}
                                             alt={`${detailProduct.title} - image ${idx}`}
-                                            style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '8px', backgroundColor: 'var(--color-dark-3)' }}
+                                            style={{ width: '100%', height: '300px', objectFit: 'cover',  backgroundColor: 'var(--color-dark-3)' }}
                                         />
                                     </div> 
                                 ))}
