@@ -56,13 +56,14 @@
 .product-content {
     padding-top: 10px;
     overflow-y: auto;
-    height: 100%;
+    height: calc(100vh - 90px);
 }
 
 .product-detail-container {
     display: flex;
     align-items: center;
     width: 100%;
+    min-height: fit-content;
 }
 
 .product-image-section {
@@ -100,6 +101,12 @@
     justify-content: flex-start;
     text-align: left;
     width: 100%;
+    flex-wrap: wrap;
+}
+
+.product-actions button {
+  flex: 1 1 150px; 
+  min-width: 120px; 
 }
 
 .product-rating {
@@ -115,4 +122,23 @@
     display: flex;
     align-items: flex-start;
     text-align: left;
+}
+
+@media (width <= 768px){
+    .product-detail-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        min-height: calc(100vh - 130px); /* Đảm bảo container đủ cao */
+        padding-bottom: 60px; /* Thêm padding để buttons không bị che */
+    }
+    .product-image-section {
+        flex: none; 
+        margin-bottom: 80px;
+    }
+    .product-info-section {
+        width: 100%;
+        align-items: center; 
+        text-align: center; 
+    }
 }

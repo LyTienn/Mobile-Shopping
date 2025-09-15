@@ -42,7 +42,7 @@
 }
 
 .cart-content {
-    max-height: calc(100vh - 145px); /* trừ header, cart-total, padding... điều chỉnh nếu cần */
+    max-height: calc(100vh - 145px);
     overflow-y: auto;
 }
 
@@ -140,4 +140,22 @@
 .remove-cart {
     min-width: 50px;
     min-height: 30px;
+}
+
+@media (width <= 425px) {
+    .cart-total-row{
+        font-size: 0.8rem;
+    }
+    .remove-total {
+        margin-right: 12px;
+        min-width: 150px;
+        min-height: 30px;
+        font-size: small;
+    }
+
+    .remove-cart {
+        min-width: 40px;
+        min-height: 20px;
+        font-size: small;
+    }
 }

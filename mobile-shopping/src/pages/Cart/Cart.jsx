@@ -61,7 +61,7 @@ const Cart = ({  collapsed }) => {
                                 />
                             </div>
                             <div className='col-span-3 flex flex-col text-left gap-4'>
-                                <b className='text-lg'> {item.title}</b>
+                                <b className='text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl'> {item.title}</b>
                                 <div className=' text-red-500'>
                                     <b>${item.price}</b>
                                 </div>
