@@ -1,6 +1,5 @@
     import { useState, Suspense, lazy, useEffect } from 'react';
     import { useNavigate, Routes, Route } from 'react-router-dom';
-    // import { fetchAllProduct } from "../../services/ProductServices";
     import { fetchAllProductsThunk } from "../../redux/product/ProductThunk";
     import { useDispatch, useSelector } from "react-redux";
     import ProductCard from '../../components/Card/ProductCard'; 
@@ -8,7 +7,7 @@
     import Filter1 from '../../components/Filter/Filter';
     import { FiFilter } from "react-icons/fi";
     import Breadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
-    import { Rate, Button, Row, Col } from "antd";
+    import { Pagination, Button, Row, Col } from "antd";
     import './Shop.css';
 
     // Lazy load Product component
@@ -16,23 +15,17 @@
 
     const ShopProductList = ({ handleViewProduct, collapsed }) => {
         const productItems = useSelector(state => state.product.allProducts);
-        // const [listProducts, setListProducts] = useState([]);
-        // const [filteredProducts, setFilteredProducts] = useState([]);
-        // const [searchedProducts, setSearchedProducts] = useState([]);
         const [showFilter, setShowFilter] = useState(false);
-        // useEffect(() => {
-        //     setListProducts(productItems);
-        //     setFilteredProducts(productItems);
-        //     setSearchedProducts(productItems);
-        // }, [productItems]);
         const [filter, setFilter] = useState({
             priceFrom: 0,
-            priceTo: 50000000,
+            priceTo: 5000,
             ratingFrom: 0,
             ratingTo: 5
         });
         const [pendingFilter, setPendingFilter] = useState(filter);
         const [search, setSearch] = useState("");
+        const [currentPage, setCurrentPage] = useState(1);
+        const [pageSize, setPageSize] = useState(12);
         
         const handleFilterChange = (newFilter) => {
             setPendingFilter(newFilter);
@@ -40,12 +33,12 @@
 
         const handleApplyFilter = () => {
             setFilter(pendingFilter);
+            setCurrentPage(1);
         }
 
         const handleResetFilter = (resetFilters) => {
             setPendingFilter(resetFilters);
         }
-
 
         const searchProduct = (productItems || []).filter((p) => {
             const name = p.title || "";
@@ -66,6 +59,24 @@
             return matchSearch && matchPrice && matchRating;
         });
 
+        const totalProducts = searchProduct.length;
+        const startIdx = (currentPage - 1) * pageSize;
+        const endIdx = startIdx + pageSize;
+        const currentProducts = searchProduct.slice(startIdx, endIdx);
+
+        const handlePageChange = (page, size) => {
+            setCurrentPage(page);
+            if (size !== pageSize) {
+                setPageSize(size);
+                setCurrentPage(1);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        useEffect(() => {
+            setCurrentPage(1);
+        }, [search]);
+
         return (
             <div className={`shop-page${collapsed ? ' collapsed' : ''}`}>
                 <div className='shop-header'>
@@ -81,8 +92,6 @@
                         {showFilter && (
                             <div
                                 className="filter-dropdown"
-                                onMouseEnter={() => setShowFilter(true)}
-                                onMouseLeave={() => setShowFilter(false)}
                                 style={{
                                     position: 'absolute',
                                     top: '140px',
@@ -103,8 +112,8 @@
 
                 <div className='shop-product'>
                 <Row gutter={[16, 16]}>
-                    {searchProduct.length > 0 ? (
-                    searchProduct.map(item => (
+                    {currentProducts.length > 0 ? (
+                    currentProducts.map(item => (
                         <Col xs={24} sm={12} md={8} lg={6} key={item.id}>
                         <ProductCard
                             product={item}
@@ -118,6 +127,22 @@
                     </Col>
                     )}
                 </Row>
+                <div
+                    style={{
+                    padding: "10px",
+                    justifyItems: "center",
+                    textAlign: "center",
+                    borderTop: "1px dashed rgba(192, 192, 192, 0.5)",
+                    }}
+                >
+                    <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={totalProducts}
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                    />
+                </div>
                 </div>
             </div>
         );

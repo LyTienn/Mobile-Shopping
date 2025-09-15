@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, useRef } from 'react'; 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDetailProductThunk } from '../../redux/product/ProductThunk';
-import { Button, notification } from 'antd';
+import { Button, notification, Carousel } from 'antd';
 import { toast } from "react-toastify";
 import { CheckCircleOutlined } from '@ant-design/icons';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
@@ -16,7 +16,7 @@ const Product = ({ collapsed }) => {
     const token = useSelector((state) => state.user.token);
     const detailProduct = useSelector((state) => state.product.detailProduct);
     const loading = useSelector((state) => state.product.loading);
-    const [selectedImage, setSelectedImage] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const [api, contextHolder] = notification.useNotification();
     const cartItems = useSelector((state) => state.cart.items);
     const cartQuantity = cartItems.reduce(
@@ -24,14 +24,15 @@ const Product = ({ collapsed }) => {
         0
     );
     const navigate = useNavigate();
+    const carouselRef = useRef(null);
 
     useEffect(() => {
         dispatch(fetchDetailProductThunk(id));
     }, [id, dispatch]);
 
     useEffect(() => {
-        if (detailProduct) {
-        setSelectedImage(detailProduct.thumbnail || detailProduct.images?.[0]);
+        if (detailProduct && detailProduct.images?.length) {
+        setSelectedIndex(0); 
         }
     }, [detailProduct]);
 
@@ -72,6 +73,15 @@ const Product = ({ collapsed }) => {
         navigate('/cart');
     }
 
+    const onCarouselChange = (current) => {
+        setSelectedIndex(current);
+    };
+
+    const onThumbnailClick = (index) => {
+        setSelectedIndex(index);
+        carouselRef.current.goTo(index, false);
+    };
+
     if (loading || !detailProduct) return <p>Đang tải dữ liệu...</p>;
 
     return (
@@ -99,25 +109,30 @@ const Product = ({ collapsed }) => {
                 <div className='product-detail-container'>
                     <div className='product-image-section'>
                         <div className="product-detail-img">
-                            <img
-                                src={selectedImage}
-                                alt={detailProduct.title}
-                                className="w-full h-full object-cover rounded-lg shadow"
-                                style={{ marginBottom: "20px" }}
-                            />
-                            <div
-                                className={`flex gap-2 ${
-                                    detailProduct.images?.length > 1 ? "overflow-x-auto" : ""
-                                }`}
-                                >
+                            <Carousel
+                                arrows infinite={false} 
+                                afterChange={onCarouselChange}
+                                ref={carouselRef}
+                            >
+                                {detailProduct.images?.map((img, idx) => (
+                                    <div key={idx}>
+                                        <img
+                                            src={img}
+                                            alt={`${detailProduct.title} - image ${idx}`}
+                                            style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '8px', backgroundColor: 'var(--color-dark-3)' }}
+                                        />
+                                    </div> 
+                                ))}
+                            </Carousel>
+                            <div className="thumbnail-img flex gap-2 overflow-x-auto">
                                 {detailProduct.images?.map((img, idx) => (
                                     <img
                                     key={idx}
                                     src={img}
                                     alt={`Thumbnail ${idx}`}
-                                    onClick={() => setSelectedImage(img)}
-                                    className={`w-16 h-16 object-cover rounded cursor-pointer border-2 transition ${
-                                        img === selectedImage
+                                    onClick={() => onThumbnailClick(idx)}
+                                    className={`w-16 h-16 object-cover rounded cursor-pointer border-3 transition ${
+                                        idx === selectedIndex
                                         ? "border-blue-500"
                                         : "border-transparent"
                                     }`}

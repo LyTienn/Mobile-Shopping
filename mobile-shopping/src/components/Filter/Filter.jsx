@@ -13,21 +13,22 @@ const Filter = ({ filter, onFilterChange, onReset, onApply }) => {
 
   const [filters, setFilters] = useState({
     priceFrom: 0,
-    priceTo: 50000000,
+    priceTo: 5000,
     ratingFrom: 0,
     ratingTo: 5
   });
 
   const priceOptions = [
-    { value: 0, label: '0 VNĐ' },
-    { value: 1000000, label: '1,000,000 VNĐ' },
-    { value: 2000000, label: '2,000,000 VNĐ' },
-    { value: 3000000, label: '3,000,000 VNĐ' },
-    { value: 5000000, label: '5,000,000 VNĐ' },
-    { value: 10000000, label: '10,000,000 VNĐ' },
-    { value: 15000000, label: '15,000,000 VNĐ' },
-    { value: 20000000, label: '20,000,000 VNĐ' },
-    { value: 50000000, label: '50,000,000 VNĐ' }
+    { value: 0, label: '0$' },
+    { value: 10, label: '10$' },
+    { value: 20, label: '20$' },
+    { value: 50, label: '50$' },
+    { value: 100, label: '100$' },
+    { value: 200, label: '200$' },
+    { value: 500, label: '500$' },
+    { value: 1000, label: '1000$' },
+    { value: 2000, label: '2000$' },
+    { value: 5000, label: '5000$' }
   ];
 
   const ratingOptions = [
@@ -48,7 +49,7 @@ const Filter = ({ filter, onFilterChange, onReset, onApply }) => {
   const handleReset = () => {
     const resetFilters = {
       priceFrom: 0,
-      priceTo: 50000000,
+      priceTo: 1000,
       ratingFrom: 0,
       ratingTo: 5
     };

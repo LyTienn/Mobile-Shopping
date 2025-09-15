@@ -80,6 +80,10 @@
     position: relative;
 }
 
+.thumbnail-img {
+    margin-top: 16px;
+}
+
 .product-info-section {
     width: 100%;
     display: flex;
@@ -129,8 +133,8 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-        min-height: calc(100vh - 130px); /* Đảm bảo container đủ cao */
-        padding-bottom: 60px; /* Thêm padding để buttons không bị che */
+        min-height: calc(100vh - 130px); 
+        padding-bottom: 60px; 
     }
     .product-image-section {
         flex: none; 
@@ -140,5 +144,8 @@
         width: 100%;
         align-items: center; 
         text-align: center; 
+    }
+    .product-rating {
+        margin: 0;
     }
 }
