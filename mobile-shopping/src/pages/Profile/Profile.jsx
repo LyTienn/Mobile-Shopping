@@ -1,11 +1,8 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserProfile } from '../../redux/user/UserThunk';
 import Logo from "../../assets/images/Logo.png";
-import { DownOutlined, CalendarOutlined } from '@ant-design/icons';
-import { DatePicker, Dropdown, Menu } from 'antd';
-import moment from 'moment';
 import { Typography, Descriptions, Avatar, Spin, Alert } from 'antd';
 import './Profile.css';
 
@@ -14,7 +11,19 @@ const { Title, Text } = Typography;
 const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const token = useSelector((state) => state.user.token);
+    const {token, profile, loading, error } = useSelector(
+    (state) => state.user
+  );
+  console.log("Profile component rendered", profile);
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login", { replace: true });
+    } else if (!profile) {
+      dispatch(fetchUserProfile());
+    }
+  }, [token, profile, dispatch, navigate]);
+
     if(!token) {
         return (
         <div className="p-6 bg-white rounded-lg">
@@ -25,10 +34,6 @@ const Profile = () => {
         </div>
         );
     }
-    const { profile, loading, error } = useSelector(
-    (state) => state.user
-  );
-  console.log("Profile component rendered", profile);
 
   return (
     <div className="relative overflow-x-auto sm:rounded-lg h-full">
@@ -45,15 +50,14 @@ const Profile = () => {
           </div>
 
         <Descriptions className='profile-table' column={1} bordered size="medium">
-          <Descriptions.Item className='font-medium' label="Ngày sinh">
-            {profile.birthDate || "Chưa cập nhật"}
+          <Descriptions.Item className='font-medium' label="Họ">
+            {profile.lastName || "Chưa cập nhật"}
+          </Descriptions.Item>
+          <Descriptions.Item className='font-medium' label="Tên">
+            {profile.firstName || "Chưa cập nhật"}
           </Descriptions.Item>
           <Descriptions.Item className='font-medium' label="Giới tính">
             {profile.gender || "Chưa cập nhật"}
-          </Descriptions.Item>
-          <Descriptions.Item className='font-medium' label="Nơi làm việc">
-            {profile?.company?.address?.address}{" "}
-            {profile?.company?.address?.city || "Chưa cập nhật"}
           </Descriptions.Item>
           <Descriptions.Item className='font-medium' label="Địa chỉ nhà">
             {profile?.address?.address} {profile?.address?.city || "Chưa cập nhật"}

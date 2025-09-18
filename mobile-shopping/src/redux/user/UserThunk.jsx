@@ -19,15 +19,13 @@ export const loginUser = createAsyncThunk(
 
 export const fetchUserProfile = createAsyncThunk(
   "user/fetchUserProfile",
-  async (_, {getState, rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     const token = getState().user.token;
     try {
       const response = await getUserProfile(token);
       return response;
     } catch (error) {
-      return rejectWithValue(
-        error.message || "Không thể tải thông tin người dùng"
-      );
+      return rejectWithValue("Không thể tải thông tin người dùng");
     }
   }
 );
