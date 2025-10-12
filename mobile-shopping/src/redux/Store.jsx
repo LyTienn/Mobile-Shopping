@@ -3,7 +3,9 @@ import userReducer from "./user/UserSlice";
 import cartReducer from "./cart/CartSlice";
 import productReducer from "./product/ProductSlice";
 import { persistStore, persistReducer } from "redux-persist";
+import { createEpicMiddleware } from 'redux-observable';
 import storage from "redux-persist/lib/storage";
+import rootEpic from "./rootEpic";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -17,13 +19,16 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+const epicMiddleware = createEpicMiddleware();
 
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(epicMiddleware),
 });
+
+epicMiddleware.run(rootEpic);
 
 export const persistor = persistStore(store);

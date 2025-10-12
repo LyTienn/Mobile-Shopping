@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserProfile } from '../../redux/user/UserThunk';
+import { fetchUserProfile } from '../../redux/user/UserSlice';
 import Logo from "../../assets/images/Logo.png";
 import { Typography, Descriptions, Avatar, Spin, Alert } from 'antd';
 import './Profile.css';
@@ -19,10 +19,10 @@ const Profile = () => {
   useEffect(() => {
     if (!token) {
       navigate("/login", { replace: true });
-    } else if (!profile) {
+    } else {
       dispatch(fetchUserProfile());
     }
-  }, [token, profile, dispatch, navigate]);
+  }, [token, dispatch, navigate]);
 
     if(!token) {
         return (

@@ -27,7 +27,6 @@ const MainLayout = () => {
               <Route path="/shop/*" element={<Shop />} />       
               <Route path="/cart" element={<Cart />} />        
               <Route path="/profile" element={<Profile />} />
-              <Route path="/" element={<Shop />} />
               <Route path="*" element={<Shop />} />
             </Routes>
             <ToastContainer

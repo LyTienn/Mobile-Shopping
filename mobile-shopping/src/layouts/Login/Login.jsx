@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/user/UserThunk";
+import { loginUser } from "../../redux/user/UserSlice";
 import { toast } from "react-toastify";
 import Logo from '../../assets/images/Logo.png';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -14,6 +14,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { loading, error, isLoggedIn } = useSelector((state) => state.user);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(loginUser({ username, password }));
@@ -21,12 +22,19 @@ const Login = () => {
     }
 
     useEffect(() => {
+        console.log('State changed:', { isLoggedIn, loading, error }); // Debug
+        
         if (isLoggedIn && !loading && !error) {
             toast.success("Đăng nhập thành công");
             const timer = setTimeout(() => {
                 navigate("/");
             }, 2000);
             return () => clearTimeout(timer); 
+        }
+        
+        // Hiển thị lỗi nếu có
+        if (error && !loading) {
+            toast.error(error);
         }
     }, [isLoggedIn, loading, error, navigate]);
 
