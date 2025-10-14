@@ -6,6 +6,9 @@ import { persistStore, persistReducer } from "redux-persist";
 import { createEpicMiddleware } from 'redux-observable';
 import storage from "redux-persist/lib/storage";
 import rootEpic from "./rootEpic";
+import { version } from "react";
+
+const allowedReducerKeys = ["cart", "user", "product"];
 
 const rootReducer = combineReducers({
   cart: cartReducer,
@@ -15,7 +18,21 @@ const rootReducer = combineReducers({
 
 const persistConfig = {
   key: "root",
+  version: 2, //Tang version khi thay doi rootReducer
   storage,
+  migrate: (persistedState) => {
+    if (persistedState) {
+      const migratedState = {};
+      for (const key of allowedReducerKeys) {
+        if (key in persistedState) {
+          migratedState[key] = persistedState[key];
+        }
+      }
+      console.log("Redux state đã migrate:", migratedState);
+      return Promise.resolve(migratedState);
+    }
+    return Promise.resolve(persistedState);
+  },
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

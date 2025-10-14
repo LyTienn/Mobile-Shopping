@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'; 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDetailProductThunk } from '../../redux/product/ProductThunk';
+import { fetchDetailProductStart } from '../../redux/product/ProductSlice';
 import { Button, notification, Carousel } from 'antd';
 import { toast } from "react-toastify";
 import { CheckCircleOutlined } from '@ant-design/icons';
@@ -27,7 +27,7 @@ const Product = ({ collapsed }) => {
     const carouselRef = useRef(null);
 
     useEffect(() => {
-        dispatch(fetchDetailProductThunk(id));
+        dispatch(fetchDetailProductStart(id));
     }, [id, dispatch]);
 
     useEffect(() => {

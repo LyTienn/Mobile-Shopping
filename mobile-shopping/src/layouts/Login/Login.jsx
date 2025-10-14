@@ -18,7 +18,6 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(loginUser({ username, password }));
-        console.log(loading, error, isLoggedIn);
     }
 
     useEffect(() => {

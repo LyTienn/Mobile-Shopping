@@ -1,6 +1,6 @@
     import { useState, Suspense, lazy, useEffect } from 'react';
     import { useNavigate, Routes, Route } from 'react-router-dom';
-    import { fetchAllProductsThunk } from "../../redux/product/ProductThunk";
+    import { fetchAllProductStart } from '../../redux/product/ProductSlice';
     import { useDispatch, useSelector } from "react-redux";
     import ProductCard from '../../components/Card/ProductCard'; 
     import Search from '../../components/Search/Search';
@@ -163,7 +163,7 @@
 
         useEffect(() => {
             if (allProducts.length === 0) {
-            dispatch(fetchAllProductsThunk());
+            dispatch(fetchAllProductStart());
             }
         }, [dispatch, allProducts.length]);
 
