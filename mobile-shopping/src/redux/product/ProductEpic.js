@@ -15,7 +15,7 @@ export const fetchAllProductEpic = (action$) => action$.pipe(
     ofType(fetchAllProductStart.type),
     switchMap(() => 
         from(fetchAllProduct()).pipe(
-            map(res => fetchAllProductSuccess(res.data.products)),
+            map(res => fetchAllProductSuccess(res.products)),
             catchError(err => of(fetchAllProductFailed(err.response?.data || "Lỗi fetchAll")))
         )
     )
