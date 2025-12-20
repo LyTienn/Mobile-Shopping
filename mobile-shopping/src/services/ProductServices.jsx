@@ -1,11 +1,11 @@
-import axios from "../config/Axios-config";
+import HttpClient from "../api/HttpClient";
 
 const fetchAllProduct = () => {
-  return axios.get("/products?limit=20");
+  return HttpClient.get("/products", { limit: 20 });
 };
 
 const fetchDetailProduct = (id) => {
-  return axios.get(`/products/${id}`);
+  return HttpClient.get(`/products/${id}`);
 };
 
 export { fetchAllProduct, fetchDetailProduct };

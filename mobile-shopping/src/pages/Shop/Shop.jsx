@@ -42,7 +42,7 @@
             setPendingFilter(defaultFilter);
             setFilterKey(prev => prev + 1);
         }
-
+        console.log("productItems from Redux:", productItems);
         const searchProduct = (productItems || []).filter((p) => {
             const name = p.title || "";
             const priceText = p.price ? p.price.toString() : "";
@@ -162,6 +162,7 @@
         };
 
         useEffect(() => {
+            console.log("Shop component mounted");
             if (allProducts.length === 0) {
             dispatch(fetchAllProductStart());
             }

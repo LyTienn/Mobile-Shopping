@@ -6,9 +6,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import { createEpicMiddleware } from 'redux-observable';
 import storage from "redux-persist/lib/storage";
 import rootEpic from "./rootEpic";
-import { version } from "react";
 
-const allowedReducerKeys = ["cart", "user", "product"];
+const allowedReducerKeys = ["cart", "user"];
 
 const rootReducer = combineReducers({
   cart: cartReducer,
