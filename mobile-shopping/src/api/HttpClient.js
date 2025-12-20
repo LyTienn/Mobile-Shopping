@@ -3,7 +3,7 @@
 import { ajax } from 'rxjs/ajax';
 import { map, catchError, timeout } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { HTTP_CONFIG } from './httpConfig';
+import { HTTP_CONFIG } from './HttpConfig';
 
 class HttpClient {
     constructor() {
